@@ -1,13 +1,13 @@
 ## Cara Instalasi
 
-1. Clone Repositori : `git clone https://github.com/AlvinDaeli748/DashboardProject.git`
-2. Akses Folder Repositori : `cd DashboardProject`
+1. Clone Repositori : `git clone https://github.com/AlvinDaeli748/Dashboard_Mitra.git`
+2. Akses Folder Repositori : `cd Dashboard_Mitra`
 3. Jalankan Composer : `composer install`
 4. Copy env dan konfigurasi : `cp env .env`
     * Uncomment `CI_ENVIRONMENT`
     * Isi informasi database 
         * `CI_ENVIRONMENT = production`
-        * `database.default.database = dbproject`
+        * `database.default.database = nama_db_anda`
         * `database.default.username = `    
         * `database.default.password = `         
         * `database.default.DBDriver = MySQLi`
@@ -26,10 +26,7 @@
     * extension_dir="ext"
         * Jalankan `php --ini` untuk mengecek lokasi file `php.ini` yang digunakan.
         * Jalankan `php -m` untuk memeriksa ekstensi aktif.
-6. Tambah Database di Phpmyadmin dengan nama database `dbproject`
+6. Tambah Database di Phpmyadmin dengan nama database `nama_db_anda`
     * Database berupa MySQL, dapat menggunakan XAMPP untuk akses ke `localhost/phpmyadmin`
-7. Export database dan seed data : `php spark migrate -all`
-    * Apabila ingin menambah data, jalankan `php spark db:seed DataSeeder` untuk menambah dummy data sebanyak 500 data.
-8. Start Website : `php spark serve`
+7. Start Website : `php spark serve`
     * Website dapat diakses dengan link `http://localhost:8080`
-9. Data untuk Login terdapat pada `Akun_Admin.txt`
