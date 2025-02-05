@@ -133,16 +133,16 @@
 
                             <!-- Right Column for File Uploads -->
                             <div class="col-md-6">
-                                <label for="foto_1" class="form-label">Fascade Depan <span style="color:red">*</span></label>
+                                <label for="foto_1" class="form-label">Fascade Depan <span style="color:red">* Max: 2 MB</span></label>
                                 <input class="form-control" type="file" id="foto_1" name="foto_1" accept="image/*" required>
 
-                                <label for="foto_2" class="form-label mt-3">Ruang Receptionist <span style="color:red">*</span></label>
+                                <label for="foto_2" class="form-label mt-3">Ruang Receptionist <span style="color:red">* Max: 2 MB</span></label>
                                 <input class="form-control" type="file" id="foto_2" name="foto_2" accept="image/*" required>
 
-                                <label for="foto_3" class="form-label mt-3">WH <span style="color:red">*</span></label>
+                                <label for="foto_3" class="form-label mt-3">WH <span style="color:red">* Max: 2 MB</span></label>
                                 <input class="form-control" type="file" id="foto_3" name="foto_3" accept="image/*" required>
 
-                                <label for="foto_4" class="form-label mt-3">Meeting Room <span style="color:red">*</span></label>
+                                <label for="foto_4" class="form-label mt-3">Meeting Room <span style="color:red">* Max: 2 MB</span></label>
                                 <input class="form-control" type="file" id="foto_4" name="foto_4" accept="image/*" required>
                             </div>
 
@@ -182,16 +182,25 @@
         }
 
         document.querySelectorAll('input[type="file"]').forEach(input => {
-            input.addEventListener('change', function () {
-                const file = this.files[0];
-                if (file) {
-                    if (!file.type.startsWith('image/')) {  // Check MIME type
-                        alert('Only image files are allowed.');
-                        this.value = ''; // Reset input field
-                    }
+        input.addEventListener('change', function () {
+            const file = this.files[0];
+            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+            if (file) {
+                if (!file.type.startsWith('image/')) { // Check MIME type
+                    alert('Hanya file gambar yang diperbolehkan.');
+                    this.value = ''; // Reset input field
+                    return;
                 }
-            });
+                
+                if (file.size > maxSize) { // Check file size
+                    alert('Ukuran file harus 2MB atau lebih kecil.');
+                    this.value = ''; // Reset input field
+                    return;
+                }
+            }
         });
+    });
 
         $(document).ready(function () {
             // Load Branches when Region is selected

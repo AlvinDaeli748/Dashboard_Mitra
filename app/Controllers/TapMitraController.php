@@ -152,32 +152,32 @@ class TapMitraController extends BaseController
             'mitra' => 'required',
             'nama_tap' => 'required',
             'alamat' => 'required|min_length[5]|regex_match[/^[a-zA-Z0-9\s.,\/\-\()]+$/]',
-            'foto_1' => 'uploaded[foto_1]|is_image[foto_1]|max_size[foto_1,5120]',
-            'foto_2' => 'uploaded[foto_2]|is_image[foto_2]|max_size[foto_2,5120]',
-            'foto_3' => 'uploaded[foto_3]|is_image[foto_3]|max_size[foto_3,5120]',
-            'foto_4' => 'uploaded[foto_4]|is_image[foto_4]|max_size[foto_4,5120]',
+            'foto_1' => 'uploaded[foto_1]|is_image[foto_1]|max_size[foto_1,2048]',
+            'foto_2' => 'uploaded[foto_2]|is_image[foto_2]|max_size[foto_2,2048]',
+            'foto_3' => 'uploaded[foto_3]|is_image[foto_3]|max_size[foto_3,2048]',
+            'foto_4' => 'uploaded[foto_4]|is_image[foto_4]|max_size[foto_4,2048]',
         ];
         
         $customErrors = [
             'foto_1' => [
                 'uploaded' => 'Fascade Depan harus diunggah.',
                 'is_image' => 'Fascade Depan harus berupa gambar.',
-                'max_size' => 'Fascade Depan tidak boleh lebih dari 5MB.',
+                'max_size' => 'Fascade Depan tidak boleh lebih dari 2MB.',
             ],
             'foto_2' => [
                 'uploaded' => 'Ruang Receptionist harus diunggah.',
                 'is_image' => 'Ruang Receptionist harus berupa gambar.',
-                'max_size' => 'Ruang Receptionist tidak boleh lebih dari 5MB.',
+                'max_size' => 'Ruang Receptionist tidak boleh lebih dari 2MB.',
             ],
             'foto_3' => [
                 'uploaded' => 'WH harus diunggah.',
                 'is_image' => 'WH harus berupa gambar.',
-                'max_size' => 'WH tidak boleh lebih dari 5MB.',
+                'max_size' => 'WH tidak boleh lebih dari 2MB.',
             ],
             'foto_4' => [
                 'uploaded' => 'Meeting Room harus diunggah.',
                 'is_image' => 'Meeting Room harus berupa gambar.',
-                'max_size' => 'Meeting Room tidak boleh lebih dari 5MB.',
+                'max_size' => 'Meeting Room tidak boleh lebih dari 2MB.',
             ],
         ];
         
@@ -216,6 +216,6 @@ class TapMitraController extends BaseController
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        return redirect()->to(base_url('tap_mitra'))->with('success', 'Data successfully saved');
+        return redirect()->to(base_url('tap_mitra'))->with('success', 'Data berhasil disimpan.');
     }
 }
