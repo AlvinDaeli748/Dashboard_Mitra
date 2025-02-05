@@ -8,22 +8,25 @@ use App\Models\TapMitraModel;
 
 class TapMitraController extends BaseController
 {
-    public function tap_mitra()
-    {
-        if (!session()->get('logged_in')) 
-        {
-            return redirect()->to('/login')->send();
-        } else {
-            return view('tap_mitra_view');
-        }
-    }
-
     private $db;
 
     public function __construct()
     {
         $this->db = \Config\Database::connect();
+
+        // Check if user is logged in for all functions
+        if (!session()->get('logged_in')) {
+            header('Location: ' . base_url('/login'));
+            exit;
+        }
     }
+
+    public function tap_mitra()
+    {
+        $query = $this->db->table('data_tap');
+        return view('tap_mitra_view');
+    }
+
 
     public function getBranches()
     {
@@ -76,18 +79,34 @@ class TapMitraController extends BaseController
     public function getMitras()
     {
         $city = $this->request->getPost('city');
+
         $query = $this->db->table('territory_reference')
-                          ->select('DISTINCT(COMPANY_NAME) AS name')
-                          ->where('KABUPATEN', $city)
-                          ->orderBy('COMPANY_NAME', 'ASC')
-                          ->get();
+                        ->select('DISTINCT(COMPANY_NAME) AS name')
+                        ->where('KABUPATEN', $city)
+                        ->orderBy('COMPANY_NAME', 'ASC')
+                        ->get();
+
         $data = $query->getResultArray();
 
-        echo '<option value="">Pilih Mitra</option>';
+        // $options = '<option value="">Pilih Mitra</option>';
+        $autoSelectMitra = '';
+
         foreach ($data as $row) {
-            echo '<option value="' . $row['name'] . '">' . $row['name'] . '</option>';
+            $options = '<option value="' . $row['name'] . '">' . $row['name'] . '</option>';
+            
+            // Auto-select first Mitra if available
+            if (!$autoSelectMitra) {
+                $autoSelectMitra = $row['name'];
+            }
         }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'mitraOptions' => $options,
+            'autoSelectMitra' => $autoSelectMitra
+        ]);
     }
+
 
     public function getNamaTAP()
     {
@@ -126,22 +145,46 @@ class TapMitraController extends BaseController
     public function save()
     {
         $validationRules = [
-            'region' => 'required|min_length[5]',
-            'branch' => 'required|min_length[5]',
-            'cluster' => 'required|min_length[5]',
-            'city' => 'required|min_length[5]',
-            'mitra' => 'required|min_length[5]',
-            'nama_tap' => 'required|min_length[5]',
-            'alamat' => 'required|min_length[5]',
+            'region' => 'required',
+            'branch' => 'required',
+            'cluster' => 'required',
+            'city' => 'required',
+            'mitra' => 'required',
+            'nama_tap' => 'required',
+            'alamat' => 'required|min_length[5]|regex_match[/^[a-zA-Z0-9\s.,\/\-\()]+$/]',
             'foto_1' => 'uploaded[foto_1]|is_image[foto_1]|max_size[foto_1,5120]',
             'foto_2' => 'uploaded[foto_2]|is_image[foto_2]|max_size[foto_2,5120]',
             'foto_3' => 'uploaded[foto_3]|is_image[foto_3]|max_size[foto_3,5120]',
             'foto_4' => 'uploaded[foto_4]|is_image[foto_4]|max_size[foto_4,5120]',
         ];
-
-        if (!$this->validate($validationRules)) {
+        
+        $customErrors = [
+            'foto_1' => [
+                'uploaded' => 'Fascade Depan harus diunggah.',
+                'is_image' => 'Fascade Depan harus berupa gambar.',
+                'max_size' => 'Fascade Depan tidak boleh lebih dari 5MB.',
+            ],
+            'foto_2' => [
+                'uploaded' => 'Ruang Receptionist harus diunggah.',
+                'is_image' => 'Ruang Receptionist harus berupa gambar.',
+                'max_size' => 'Ruang Receptionist tidak boleh lebih dari 5MB.',
+            ],
+            'foto_3' => [
+                'uploaded' => 'WH harus diunggah.',
+                'is_image' => 'WH harus berupa gambar.',
+                'max_size' => 'WH tidak boleh lebih dari 5MB.',
+            ],
+            'foto_4' => [
+                'uploaded' => 'Meeting Room harus diunggah.',
+                'is_image' => 'Meeting Room harus berupa gambar.',
+                'max_size' => 'Meeting Room tidak boleh lebih dari 5MB.',
+            ],
+        ];
+        
+        if (!$this->validate($validationRules, $customErrors)) {
             return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
         }
+        
 
         $mitraModel = new TapMitraModel();
 

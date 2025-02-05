@@ -68,7 +68,7 @@
             <div class="row justify-content-center authentication authentication-basic align-items-center h-100">
                 <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-6 col-sm-8 col-12">
                     <div class="my-4 d-flex justify-content-center">
-                        <a href="<?= base_url('ch_dashboard') ?>">
+                        <a href="<?= base_url('home') ?>">
                             <!-- Disini Logo -->
 
                             <!-- <img src="<?= base_url('assets/images/brand-logos/desktop-white.png') ?>" alt="logo"> -->

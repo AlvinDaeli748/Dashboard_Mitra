@@ -32,27 +32,33 @@
     <?php if (session()->getFlashdata('error')): ?>
         <div class="alert-container">
             <div id="fadeAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error!</strong>
-                <?php 
-                    $errors = session()->getFlashdata('error');
-                    if (is_array($errors)) {
-                        echo '<ul>';
-                        foreach ($errors as $error) {
-                            echo '<li>' . esc($error) . '</li>';
+                <div class="alert-header">
+                    <strong>Error!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+                <div class="alert-body">
+                    <?php 
+                        $errors = session()->getFlashdata('error');
+                        if (is_array($errors)) {
+                            echo '<ul>';
+                            foreach ($errors as $error) {
+                                echo '<li>' . esc($error) . '</li>';
+                            }
+                            echo '</ul>';
+                        } else {
+                            echo esc($errors);
                         }
-                        echo '</ul>';
-                    } else {
-                        echo esc($errors);
-                    }
-                ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    ?>
+                </div>
             </div>
         </div>
     <?php elseif (session()->getFlashdata('success')): ?>
         <div class="alert-container">
             <div id="fadeAlert" class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success!</strong> <?= esc(session()->getFlashdata('success')) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="bi bi-x"></i></button>
             </div>
         </div>
     <?php endif; ?>
@@ -71,7 +77,7 @@
             <div class="container-fluid">
                 <!-- PAGE-HEADER -->
                 <div class="page-header">
-                  <h1 class="page-title my-auto">Input TAP Mitra</h1>
+                  <h1 class="page-title my-auto">TAP Mitra</h1>
                   <div>
                     <h3>Update: <?= $newDate ?></h3>
                   </div>
@@ -93,47 +99,53 @@
 
                                 <label for="branch" class="form-label mt-3">Branch <span style="color:red">*</span></label>
                                 <select class="form-control" id="branch" name="branch" required style="width: 100%;">
-                                    <option value="">Pilih Branch</option>
+                                    <option value="" disabled> - </option>
                                 </select>
 
                                 <label for="cluster" class="form-label mt-3">Cluster <span style="color:red">*</span></label>
                                 <select class="form-control" id="cluster" name="cluster" required style="width: 100%;">
-                                    <option value="">Pilih Cluster</option>
+                                    <option value="" disabled> - </option>
                                 </select>
 
                                 <label for="city" class="form-label mt-3">City <span style="color:red">*</span></label>
                                 <select class="form-control" id="city" name="city" required style="width: 100%;">
-                                    <option value="">Pilih City</option>
+                                    <option value="" disabled> - </option>
                                 </select>
 
                                 <label for="mitra" class="form-label mt-3">Mitra <span style="color:red">*</span></label>
                                 <select class="form-control" id="mitra" name="mitra" required style="width: 100%;">
-                                    <option value="">Pilih Mitra</option>
+                                    <option value="" disabled> - </option>
                                 </select>
 
                                 <label for="nama_tap" class="form-label mt-3">Nama TAP <span style="color:red">*</span></label>
                                 <select class="form-control" id="nama_tap" name="nama_tap" required style="width: 100%;">
-                                    <option value="">Pilih TAP</option>
+                                    <option value="" disabled> - </option>
                                 </select>
 
                                 <label for="alamat" class="form-label mt-3">Alamat <span style="color:red">*</span></label>
-                                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Contoh: Jl. Balai Kota, No.2, Sumatera Utara" required>
+                                <input type="text" class="form-control" id="alamat" name="alamat" 
+                                    placeholder="Contoh: Jl. Balai Kota, No.2, Sumatera Utara" 
+                                    required 
+                                    oninput="validateAlamat(this)">
+
+                                <small id="alamatError" style="color: red; display: none;">Hanya boleh huruf, angka, spasi, titik (.), koma (,), garis miring (/), tanda hubung (-), dan kurung ().</small>
                             </div>
 
                             <!-- Right Column for File Uploads -->
                             <div class="col-md-6">
                                 <label for="foto_1" class="form-label">Fascade Depan <span style="color:red">*</span></label>
-                                <input class="form-control" type="file" id="foto_1" name="foto_1" required>
+                                <input class="form-control" type="file" id="foto_1" name="foto_1" accept="image/*" required>
 
                                 <label for="foto_2" class="form-label mt-3">Ruang Receptionist <span style="color:red">*</span></label>
-                                <input class="form-control" type="file" id="foto_2" name="foto_2" required>
+                                <input class="form-control" type="file" id="foto_2" name="foto_2" accept="image/*" required>
 
                                 <label for="foto_3" class="form-label mt-3">WH <span style="color:red">*</span></label>
-                                <input class="form-control" type="file" id="foto_3" name="foto_3" required>
+                                <input class="form-control" type="file" id="foto_3" name="foto_3" accept="image/*" required>
 
                                 <label for="foto_4" class="form-label mt-3">Meeting Room <span style="color:red">*</span></label>
-                                <input class="form-control" type="file" id="foto_4" name="foto_4" required>
+                                <input class="form-control" type="file" id="foto_4" name="foto_4" accept="image/*" required>
                             </div>
+
                         </div>
                         <button type="submit" class="btn btn-info mt-3">Submit</button>
                     </form>
@@ -157,6 +169,30 @@
     <?= require('layout/footer.php') ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function validateAlamat(input) {
+            const regex = /^[a-zA-Z0-9\s.,\/\-\()]*$/;
+            const errorText = document.getElementById("alamatError");
+
+            if (!regex.test(input.value)) {
+                errorText.style.display = "block"; // Show error message
+                input.value = input.value.replace(/[^a-zA-Z0-9\s.,\/\-\()]/g, ''); // Remove invalid characters
+            } else {
+                errorText.style.display = "none"; // Hide error message
+            }
+        }
+
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    if (!file.type.startsWith('image/')) {  // Check MIME type
+                        alert('Only image files are allowed.');
+                        this.value = ''; // Reset input field
+                    }
+                }
+            });
+        });
+
         $(document).ready(function () {
             // Load Branches when Region is selected
             $("#region").change(function () {
@@ -167,9 +203,9 @@
                     data: { region: region },
                     success: function (data) {
                         $("#branch").html(data);
-                        $("#cluster").html('<option value="">Pilih Cluster</option>');
-                        $("#city").html('<option value="">Pilih City</option>');
-                        $("#mitra").html('<option value="">Pilih Mitra</option>');
+                        $("#cluster").html('<option value="" disabled> - </option>');
+                        $("#city").html('<option value="" disabled> - </option>');
+                        $("#mitra").html('<option value="" disabled> - </option>');
                     }
                 });
             });
@@ -183,8 +219,8 @@
                     data: { branch: branch },
                     success: function (data) {
                         $("#cluster").html(data);
-                        $("#city").html('<option value="">Pilih City</option>');
-                        $("#mitra").html('<option value="">Pilih Mitra</option>');
+                        $("#city").html('<option value="" disabled> - </option>');
+                        $("#mitra").html('<option value="" disabled> - </option>');
                     }
                 });
             });
@@ -198,7 +234,7 @@
                     data: { cluster: cluster },
                     success: function (data) {
                         $("#city").html(data);
-                        $("#mitra").html('<option value="">Pilih Mitra</option>');
+                        $("#mitra").html('<option value="" disabled> - </option>');
                     }
                 });
             });
@@ -206,41 +242,27 @@
             // Load Mitras when City is selected
             $("#city").change(function () {
                 var city = $(this).val();
-                $.ajax({
-                    url: "<?= base_url('tap_mitra/getMitras') ?>",
-                    type: "POST",
-                    data: { city: city },
-                    success: function (data) {
-                        $("#mitra").html(data);
-                    }
-                });
-            });
 
-            // Reset dropdowns when a higher-level selection changes
-            $("#region").change(function () {
-                $("#branch").html('<option value="">Pilih Branch</option>');
-                $("#cluster").html('<option value="">Pilih Cluster</option>');
-                $("#city").html('<option value="">Pilih City</option>');
-                $("#mitra").html('<option value="">Pilih Mitra</option>');
-                $("#nama_tap").html('<option value="">Pilih TAP</option>');
-            });
+                if (city) {
+                    $.ajax({
+                        url: "<?= base_url('tap_mitra/getMitras') ?>",
+                        type: "POST",
+                        data: { city: city },
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.success) {
+                                // Populate Mitra dropdown
+                                $("#mitra").html(response.mitraOptions);
+                                $("#nama_tap").val(''); // Clear TAP field
 
-            $("#branch").change(function () {
-                $("#cluster").html('<option value="">Pilih Cluster</option>');
-                $("#city").html('<option value="">Pilih City</option>');
-                $("#mitra").html('<option value="">Pilih Mitra</option>');
-                $("#nama_tap").html('<option value="">Pilih TAP</option>');
-            });
-
-            $("#cluster").change(function () {
-                $("#city").html('<option value="">Pilih City</option>');
-                $("#mitra").html('<option value="">Pilih Mitra</option>');
-                $("#nama_tap").html('<option value="">Pilih TAP</option>');
-            });
-
-            $("#city").change(function () {
-                $("#mitra").html('<option value="">Pilih Mitra</option>');
-                $("#nama_tap").html('<option value="">Pilih TAP</option>');
+                                // Auto-select first Mitra if available
+                                if (response.autoSelectMitra) {
+                                    $("#mitra").val(response.autoSelectMitra).trigger('change');
+                                }
+                            }
+                        }
+                    });
+                }
             });
 
             // Load TAP when Mitra is selected
@@ -265,6 +287,29 @@
                     }
                 });
             });
+
+            // Reset dropdowns when a higher-level selection changes
+            $("#region").change(function () {
+                $("#branch").html('<option value="">Pilih Branch</option>');
+                $("#cluster").html('<option value="" disabled> - </option>');
+                $("#city").html('<option value="" disabled> - </option>');
+                $("#mitra").html('<option value="" disabled> - </option>');
+                $("#nama_tap").html('<option value="" disabled> - </option>');
+            });
+
+            $("#branch").change(function () {
+                $("#cluster").html('<option value="">Pilih Cluster</option>');
+                $("#city").html('<option value="" disabled> - </option>');
+                $("#mitra").html('<option value="" disabled> - </option>');
+                $("#nama_tap").html('<option value="" disabled> - </option>');
+            });
+
+            $("#cluster").change(function () {
+                $("#city").html('<option value="">Pilih City</option>');
+                $("#mitra").html('<option value="" disabled> - </option>');
+                $("#nama_tap").html('<option value="" disabled> - </option>');
+            });
+
         });
     </script>
 </body>

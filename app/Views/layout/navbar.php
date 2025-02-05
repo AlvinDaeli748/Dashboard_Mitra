@@ -72,7 +72,7 @@
             <!-- Start::header-element -->
             <div class="header-element">
                 <div class="horizontal-logo">
-                    <a href="<?= base_url('ch_dashboard') ?>" class="header-logo">
+                    <a href="<?= base_url('home') ?>" class="header-logo">
                         <img src="<?= base_url('assets/images/brand-logos/desktop-logo.png') ?>" alt="logo" class="desktop-logo">
                         <img src="<?= base_url('assets/images/brand-logos/toggle-logo.png') ?>" alt="logo" class="toggle-logo">
                         <img src="<?= base_url('assets/images/brand-logos/desktop-dark.png') ?>" alt="logo" class="desktop-dark">
@@ -313,7 +313,7 @@
 
         try {
             // Fetch file list from the server
-            const fileResponse = await fetch(`${baseURL}/ch_dashboard/download/getFiles?data=${folderName}`);
+            const fileResponse = await fetch(`${baseURL}/home/download/getFiles?data=${folderName}`);
             const files = await fileResponse.json();
 
             const zip = new JSZip();
@@ -321,7 +321,7 @@
 
             // Fetch files with concurrency control
             await fetchWithConcurrency(
-                files.map(file => `${baseURL}/ch_dashboard/download/serve/${folderName}/${file}`),
+                files.map(file => `${baseURL}/home/download/serve/${folderName}/${file}`),
                 concurrencyLimit,
                 async (url) => {
                     try {

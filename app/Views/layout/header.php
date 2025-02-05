@@ -7,8 +7,7 @@
 <!-- Main Theme Js -->
 <script src="<?= base_url('assets/js/main.js') ?>"></script>
 
-<!-- Bootstrap Css -->
-<link id="style" href="<?= base_url('assets/libs/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" >
+
 
 <!-- Style Css -->
 <link href="<?= base_url('assets/css/styles.min.css') ?>" rel="stylesheet" >
@@ -54,9 +53,37 @@
         top: 20px;
         right: 20px;
         z-index: 1050;
+        width: auto;
     }
 
     .alert {
-        min-width: 250px;
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: start;
+        align-items: start;
+        padding: 15px;
     }
+
+    .alert-header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+    }
+
+    .alert-body {
+        width: 100%;
+        margin-top: 5px; /* Adds spacing between header and list */
+    }
+
+    .btn-close {
+        position: relative;
+        top: 0;
+        margin-left: 10px;
+    }
+
+    .alert-dismissible .btn-close {
+        padding: 0.85rem;
+    }
+
 </style>

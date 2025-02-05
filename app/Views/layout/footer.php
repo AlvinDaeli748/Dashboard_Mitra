@@ -91,7 +91,7 @@
             setTimeout(function () {
                 var alert = new bootstrap.Alert(loginAlert);
                 alert.close();
-            }, 5000);
+            }, 300000);
         }
     });
     
