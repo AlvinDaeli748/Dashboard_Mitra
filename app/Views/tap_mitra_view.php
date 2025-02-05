@@ -156,7 +156,8 @@
                 <!-- Input Section - Mitra END -->
 
                 <!-- View Section - Mitra -->
-
+                <br><br>
+                <h3>Data TAP Mitra</h3>
                 <table id="TAP_Mitra_Table" class="ui celled table table-striped table-hover" style="white-space:nowrap !important;" data-page-length='-1'>
                     <thead style="white-space:nowrap; text-align:center !important;">
                         <tr>
@@ -215,7 +216,6 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
-
                 <!-- View Section - Mitra END -->
 
 
