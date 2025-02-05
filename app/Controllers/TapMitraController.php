@@ -23,8 +23,13 @@ class TapMitraController extends BaseController
 
     public function tap_mitra()
     {
-        $query = $this->db->table('data_tap');
-        return view('tap_mitra_view');
+        $query = $this->db->table('data_tap')
+                          ->select('*')
+                          ->orderBy('created_at', 'DESC')
+                          ->get();
+        $data['dataTAPMitra'] = $query->getResult();
+
+        return view('tap_mitra_view', $data);
     }
 
 
@@ -194,7 +199,7 @@ class TapMitraController extends BaseController
             $file = $this->request->getFile($fileKey);
             if ($file->isValid() && !$file->hasMoved()) {
                 $newName = $file->getRandomName();
-                $file->move(WRITEPATH . 'uploads/mitra', $newName);
+                $file->move(FCPATH . 'uploads/mitra', $newName);
                 $uploadedFiles[$fileKey] = $newName;
             }
         }

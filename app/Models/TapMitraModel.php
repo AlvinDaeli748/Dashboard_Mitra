@@ -10,6 +10,6 @@ class TapMitraModel extends Model
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true; 
     protected $allowedFields = [
-        'region', 'branch', 'cluster', 'city', 'mitra', 'nama_tap', 'alamat', 'foto_1', 'foto_2', 'foto_3', 'foto_4', 'event_date'
+        'region', 'branch', 'cluster', 'city', 'mitra', 'nama_tap', 'alamat', 'foto_1', 'foto_2', 'foto_3', 'foto_4', 'created_at', 'updated_at'
     ];
 }

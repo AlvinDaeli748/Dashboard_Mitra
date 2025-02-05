@@ -83,6 +83,8 @@
                   </div>
                 </div>
                 <!-- PAGE-HEADER END -->
+
+                <!-- Input Section - Mitra -->
          
                 <div class="card-body">
                     <form action="<?= base_url('tap_mitra/save') ?>" method="post" enctype="multipart/form-data">
@@ -151,11 +153,92 @@
                     </form>
                 </div>
 
+                <!-- Input Section - Mitra END -->
+
+                <!-- View Section - Mitra -->
+
+                <table id="TAP_Mitra_Table" class="ui celled table table-striped table-hover" style="white-space:nowrap !important;" data-page-length='-1'>
+                    <thead style="white-space:nowrap; text-align:center !important;">
+                        <tr>
+                            <th style="background-color:#156082; color:white;">Region</th>
+                            <th style="background-color:#156082; color:white;">Branch</th>
+                            <th style="background-color:#156082; color:white;">Cluster</th>
+                            <th style="background-color:#156082; color:white;">City</th>
+                            <th style="background-color:#156082; color:white;">Mitra</th>
+                            <th style="background-color:#156082; color:white;">Nama TAP</th>
+                            <th style="background-color:#156082; color:white;">Alamat</th>
+
+                            <th style="background-color:#C00000; color:white;">Foto 1</th>
+                            <th style="background-color:#C00000; color:white;">Foto 2</th>
+                            <th style="background-color:#C00000; color:white;">Foto 3</th>
+                            <th style="background-color:#C00000; color:white;">Foto 4</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($dataTAPMitra)): ?>
+                            <?php foreach ($dataTAPMitra as $row): ?>
+                              <tr>
+                                <td><?= esc($row->region) ?></td>
+                                <td><?= esc($row->branch) ?></td>
+                                <td><?= esc($row->cluster) ?></td>
+                                <td><?= esc($row->city) ?></td>
+                                <td><?= esc($row->mitra) ?></td>
+                                <td><?= esc($row->nama_tap) ?></td>
+                                <td><?= esc($row->alamat) ?></td>
+                                
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_1)) ?>')">
+                                        Fascade<br>Depan
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_2)) ?>')">
+                                        Ruang<br>Receptionist
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_3)) ?>')">
+                                        WH
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_4)) ?>')">
+                                        Meeting<br>Room
+                                    </a>
+                                </td>
+
+                                
+                              </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                          
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+
+                <!-- View Section - Mitra END -->
 
 
             </div>
         </div>
         <!-- End::app-content -->
+
+        <!-- Image Modal -->
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Preview</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="modalImage" src="" class="img-fluid" alt="Preview">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Image Modal END -->
+
 
 
 
@@ -169,6 +252,12 @@
     <?= require('layout/footer.php') ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function openImageModal(imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+            var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            myModal.show();
+        }
+
         function validateAlamat(input) {
             const regex = /^[a-zA-Z0-9\s.,\/\-\()]*$/;
             const errorText = document.getElementById("alamatError");
@@ -319,7 +408,57 @@
                 $("#nama_tap").html('<option value="" disabled> - </option>');
             });
 
+
+            $('#TAP_Mitra_Table').DataTable({
+              ordering: false,
+              scrollX: true,
+              lengthMenu: [10, 25, 50, { label: 'All', value: -1 }],
+              createdRow: function(row, data, dataIndex) {
+                    // Loop through each cell in the row
+                    $('td', row).each(function(index) {
+                        var cellValue = $(this).text(); // Get the cell text value
+
+                        // Additional condition for values less than 0 or "0%" and style them with a different color
+                        if (cellValue === "0%" || parseFloat(cellValue) <= 0 || cellValue === "0") {
+                            $(this).css({ 'background-color': 'RGBA(255,0,0,0.1)' }); // Set background to red if value is 0 or less
+                        }
+                    });
+                }
+          });
+
+          $('#TAP_MitraFilter').on('change', function() {
+              $('#TAP_Mitra_Table').DataTable().ajax.reload(); // Use the correct reference to the DataTable
+          });
+
         });
+
+
+      // export excel
+      document.getElementById('exportTAP_Mitra_excel').addEventListener('click', function() {
+          var table = document.getElementById('TAP_Mitra_Table');
+          var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+          XLSX.writeFile(wb, 'Excel_TAP_Mitra.xlsx');
+      });
+
+      //export gambar
+      document.getElementById('exportTAP_Mitra_gambar').addEventListener('click', function () {
+          var dataTableWrapper = document.querySelector('#TAP_Mitra_Table');
+          
+          var clonedTable = dataTableWrapper.cloneNode(true);
+          clonedTable.style.height = 'auto';
+          clonedTable.style.overflow = 'visible';
+          
+          document.body.appendChild(clonedTable);  
+
+          html2canvas(clonedTable).then(function (canvas) {
+              var link = document.createElement('a');
+              link.download = 'TAP_Mitra.png';
+              link.href = canvas.toDataURL('image/png');
+              link.click();
+
+              document.body.removeChild(clonedTable);
+          });
+      });
     </script>
 </body>
 
