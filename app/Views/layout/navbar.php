@@ -214,7 +214,7 @@
 
                     <ul class="slide-menu child1" style="color:white !important;">
                         <li class="slide active open">
-                            <a href="<?= base_url('#') ?>" class="side-menu__item <?= (current_url() == site_url('/#')) ? 'active' : ''; ?>" style="color:white !important;">Data TAP Mitra</a>
+                            <a href="<?= base_url('tap_mitra') ?>" class="side-menu__item <?= (current_url() == site_url('/tap_mitra')) ? 'active' : ''; ?>" style="color:white !important;">Data TAP Mitra</a>
                         </li>
                     </ul>
            

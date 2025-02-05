@@ -59,7 +59,4 @@
     .alert {
         min-width: 250px;
     }
-    select {
-        max-width: 11.825rem;
-    }
 </style>
