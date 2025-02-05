@@ -29,6 +29,18 @@ class TapMitraController extends BaseController
                           ->get();
         $data['dataTAPMitra'] = $query->getResult();
 
+        $query = $this->db->table('data_tap')
+                            ->select(['region', 'branch', 'cluster', 'mitra', 
+                                    'COUNT(DISTINCT city) AS jlh_city', 'COUNT(nama_tap) AS jlh_tap'])
+                            ->groupBy('cluster')
+                            ->orderBy('region', 'DESC')
+                            ->orderBy('branch', 'ASC')
+                            ->orderBy('cluster', 'ASC')
+                            ->orderBy('mitra', 'ASC')
+                            ->get();
+
+        $data['dataTAPMitra_Summary'] = $query->getResult();
+
         return view('tap_mitra_view', $data);
     }
 

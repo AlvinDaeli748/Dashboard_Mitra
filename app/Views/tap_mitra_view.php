@@ -218,6 +218,172 @@
                 </table>
                 <!-- View Section - Mitra END -->
 
+                <!-- View Section - Approval -->
+                <br><br>
+                <h3>Approve Data TAP</h3>
+                <table id="TAP_Approval_Table" class="ui celled table table-striped table-hover" style="white-space:nowrap !important;" data-page-length='-1'>
+                    <thead style="white-space:nowrap; text-align:center !important;">
+                        <tr>
+                            <th style="background-color:#156082; color:white;">Region</th>
+                            <th style="background-color:#156082; color:white;">Branch</th>
+                            <th style="background-color:#156082; color:white;">Cluster</th>
+                            <th style="background-color:#156082; color:white;">City</th>
+                            <th style="background-color:#156082; color:white;">Mitra</th>
+                            <th style="background-color:#156082; color:white;">Nama TAP</th>
+                            <th style="background-color:#156082; color:white;">Alamat</th>
+
+                            <th style="background-color:#C00000; color:white;">Foto 1</th>
+                            <th style="background-color:#C00000; color:white;">Foto 2</th>
+                            <th style="background-color:#C00000; color:white;">Foto 3</th>
+                            <th style="background-color:#C00000; color:white;">Foto 4</th>
+                            <th style="background-color:#F0F0F0;" colspan="2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($dataTAPMitra)): ?>
+                            <?php foreach ($dataTAPMitra as $row): ?>
+                              <tr>
+                                <td><?= esc($row->region) ?></td>
+                                <td><?= esc($row->branch) ?></td>
+                                <td><?= esc($row->cluster) ?></td>
+                                <td><?= esc($row->city) ?></td>
+                                <td><?= esc($row->mitra) ?></td>
+                                <td><?= esc($row->nama_tap) ?></td>
+                                <td><?= esc($row->alamat) ?></td>
+                                
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_1)) ?>')">
+                                        Fascade<br>Depan
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_2)) ?>')">
+                                        Ruang<br>Receptionist
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_3)) ?>')">
+                                        WH
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_4)) ?>')">
+                                        Meeting<br>Room
+                                    </a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm btn-wave">Approve</button>
+                                    <br>
+                                    <button type="button" class="btn btn-danger btn-sm btn-wave">Reject</button>
+                                </td>
+                              </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                          
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+                <!-- View Section - Approval END -->
+
+                <!-- View Section - Summary -->
+                <br><br>
+                <h3>Summary Data TAP</h3>
+                <table id="TAP_Summary_Table" class="ui celled table table-striped table-hover" style="white-space:nowrap !important;" data-page-length='-1'>
+                    <thead style="white-space:nowrap; text-align:center !important;">
+                        <tr>
+                            <th style="background-color:#156082; color:white;">Region</th>
+                            <th style="background-color:#156082; color:white;">Branch</th>
+                            <th style="background-color:#156082; color:white;">Cluster</th>
+                            <th style="background-color:#156082; color:white;">Mitra</th>
+
+                            <th style="background-color:#C00000; color:white;">Jumlah City</th>
+                            <th style="background-color:#C00000; color:white;">Jumlah TAP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($dataTAPMitra_Summary)): ?>
+                            <?php foreach ($dataTAPMitra_Summary as $row): ?>
+                              <tr>
+                                <td><?= esc($row->region) ?></td>
+                                <td><?= esc($row->branch) ?></td>
+                                <td><?= esc($row->cluster) ?></td>
+                                <td><?= esc($row->mitra) ?></td>
+                                <td><?= esc($row->jlh_city) ?></td>
+                                <td><?= esc($row->jlh_tap) ?></td>
+                              </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                          
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+                <!-- View Section - Summary END -->
+
+                <!-- View Section - Update -->
+                <br><br>
+                <h3>Update Data TAP</h3>
+                <table id="TAP_Update_Table" class="ui celled table table-striped table-hover" style="white-space:nowrap !important;" data-page-length='-1'>
+                    <thead style="white-space:nowrap; text-align:center !important;">
+                        <tr>
+                            <th style="background-color:#156082; color:white;">Region</th>
+                            <th style="background-color:#156082; color:white;">Branch</th>
+                            <th style="background-color:#156082; color:white;">Cluster</th>
+                            <th style="background-color:#156082; color:white;">City</th>
+                            <th style="background-color:#156082; color:white;">Mitra</th>
+                            <th style="background-color:#156082; color:white;">Nama TAP</th>
+                            <th style="background-color:#156082; color:white;">Alamat</th>
+
+                            <th style="background-color:#C00000; color:white;">Foto 1</th>
+                            <th style="background-color:#C00000; color:white;">Foto 2</th>
+                            <th style="background-color:#C00000; color:white;">Foto 3</th>
+                            <th style="background-color:#C00000; color:white;">Foto 4</th>
+                            <th style="background-color:#F0F0F0;" colspan="2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($dataTAPMitra)): ?>
+                            <?php foreach ($dataTAPMitra as $row): ?>
+                              <tr>
+                                <td><?= esc($row->region) ?></td>
+                                <td><?= esc($row->branch) ?></td>
+                                <td><?= esc($row->cluster) ?></td>
+                                <td><?= esc($row->city) ?></td>
+                                <td><?= esc($row->mitra) ?></td>
+                                <td><?= esc($row->nama_tap) ?></td>
+                                <td><?= esc($row->alamat) ?></td>
+                                
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_1)) ?>')">
+                                        Fascade<br>Depan
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_2)) ?>')">
+                                        Ruang<br>Receptionist
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_3)) ?>')">
+                                        WH
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="openImageModal('<?= base_url('uploads/mitra/' . esc($row->foto_4)) ?>')">
+                                        Meeting<br>Room
+                                    </a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-wave">Need<br>Update</button>
+                                </td>
+                              </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                          
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+                <!-- View Section - Update END -->
+
 
             </div>
         </div>
@@ -271,25 +437,25 @@
         }
 
         document.querySelectorAll('input[type="file"]').forEach(input => {
-        input.addEventListener('change', function () {
-            const file = this.files[0];
-            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+            input.addEventListener('change', function () {
+                const file = this.files[0];
+                const maxSize = 2 * 1024 * 1024; // 2MB in bytes
 
-            if (file) {
-                if (!file.type.startsWith('image/')) { // Check MIME type
-                    alert('Hanya file gambar yang diperbolehkan.');
-                    this.value = ''; // Reset input field
-                    return;
+                if (file) {
+                    if (!file.type.startsWith('image/')) { // Check MIME type
+                        alert('Hanya file gambar yang diperbolehkan.');
+                        this.value = ''; // Reset input field
+                        return;
+                    }
+                    
+                    if (file.size > maxSize) { // Check file size
+                        alert('Ukuran file harus 2MB atau lebih kecil.');
+                        this.value = ''; // Reset input field
+                        return;
+                    }
                 }
-                
-                if (file.size > maxSize) { // Check file size
-                    alert('Ukuran file harus 2MB atau lebih kecil.');
-                    this.value = ''; // Reset input field
-                    return;
-                }
-            }
+            });
         });
-    });
 
         $(document).ready(function () {
             // Load Branches when Region is selected
@@ -424,11 +590,58 @@
                         }
                     });
                 }
-          });
+            });
 
-          $('#TAP_MitraFilter').on('change', function() {
-              $('#TAP_Mitra_Table').DataTable().ajax.reload(); // Use the correct reference to the DataTable
-          });
+            $('#TAP_Approval_Table').DataTable({
+              ordering: false,
+              scrollX: true,
+              lengthMenu: [10, 25, 50, { label: 'All', value: -1 }],
+              createdRow: function(row, data, dataIndex) {
+                    // Loop through each cell in the row
+                    $('td', row).each(function(index) {
+                        var cellValue = $(this).text(); // Get the cell text value
+
+                        // Additional condition for values less than 0 or "0%" and style them with a different color
+                        if (cellValue === "0%" || parseFloat(cellValue) <= 0 || cellValue === "0") {
+                            $(this).css({ 'background-color': 'RGBA(255,0,0,0.1)' }); // Set background to red if value is 0 or less
+                        }
+                    });
+                }
+            });
+
+            $('#TAP_Summary_Table').DataTable({
+              ordering: false,
+              scrollX: true,
+              lengthMenu: [10, 25, 50, { label: 'All', value: -1 }],
+              createdRow: function(row, data, dataIndex) {
+                    // Loop through each cell in the row
+                    $('td', row).each(function(index) {
+                        var cellValue = $(this).text(); // Get the cell text value
+
+                        // Additional condition for values less than 0 or "0%" and style them with a different color
+                        if (cellValue === "0%" || parseFloat(cellValue) <= 0 || cellValue === "0") {
+                            $(this).css({ 'background-color': 'RGBA(255,0,0,0.1)' }); // Set background to red if value is 0 or less
+                        }
+                    });
+                }
+            });
+
+            $('#TAP_Update_Table').DataTable({
+              ordering: false,
+              scrollX: true,
+              lengthMenu: [10, 25, 50, { label: 'All', value: -1 }],
+              createdRow: function(row, data, dataIndex) {
+                    // Loop through each cell in the row
+                    $('td', row).each(function(index) {
+                        var cellValue = $(this).text(); // Get the cell text value
+
+                        // Additional condition for values less than 0 or "0%" and style them with a different color
+                        if (cellValue === "0%" || parseFloat(cellValue) <= 0 || cellValue === "0") {
+                            $(this).css({ 'background-color': 'RGBA(255,0,0,0.1)' }); // Set background to red if value is 0 or less
+                        }
+                    });
+                }
+            });
 
         });
 
